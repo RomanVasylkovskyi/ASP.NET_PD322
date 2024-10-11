@@ -9,7 +9,7 @@ namespace ApiStore.Mapper
     {
         public AppMapProfile()
         {
-            CreateMap<CategoryCreateViewModel, CategoryEntity>()
+            CreateMap<CategoryCreateViewModel, CategoryEntity>() 
                 .ForMember(x=>x.Image, opt=>opt.Ignore());
             CreateMap<CategoryEditViewModel, CategoryEntity>()
                 .ForMember(x => x.Image, opt => opt.Ignore());

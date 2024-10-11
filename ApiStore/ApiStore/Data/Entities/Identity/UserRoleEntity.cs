@@ -7,5 +7,5 @@ namespace ApiStore.Data.Entities.Identity
     {
         public virtual UserEntity User { get; set; } = new();
         public virtual RoleEntity Role { get; set; } = new();
-    }
+    } 
 }
