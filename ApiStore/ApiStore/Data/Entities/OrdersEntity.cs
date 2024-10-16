@@ -9,7 +9,7 @@ namespace ApiStore.Data.Entities
         public int OrdersId { get; set; }
 
         [Required]
-        public string UserId { get; set; } = string.Empty; 
+        public string UserId { get; set; } = string.Empty;
 
         public virtual ICollection<OrdersItem>? OrdersItems { get; set; }
     }

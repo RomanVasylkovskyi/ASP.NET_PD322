@@ -1,0 +1,59 @@
+using Microsoft.AspNetCore.Mvc;
+using ApiStore.Data.Entities;
+
+namespace ApiStore.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BasketController : ControllerBase
+    {
+        private readonly ApplicationDbContext _context;
+
+        public BasketController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        // POST: api/basket/add-item
+        [HttpPost("add-item")]
+        public async Task<IActionResult> AddItemToBasket([FromBody] AddBasketItemRequest request)
+        {
+            var basket = await _context.Baskets.FindAsync(request.BasketId);
+            if (basket == null)
+            {
+                return NotFound(new { Message = "Basket not found" });
+            }
+
+            var product = await _context.Products.FindAsync(request.ProductId);
+            if (product == null)
+            {
+                return NotFound(new { Message = "Product not found" });
+            }
+
+            var basketItem = new BasketItem
+            {
+                BasketId = request.BasketId,
+                ProductId = request.ProductId,
+                Quantity = request.Quantity
+            };
+
+            _context.BasketItems.Add(basketItem);
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                BasketItemId = basketItem.BasketItemId,
+                BasketId = basketItem.BasketId,
+                ProductId = basketItem.ProductId,
+                Quantity = basketItem.Quantity
+            });
+        }
+    }
+
+    public class AddBasketItemRequest
+    {
+        public int BasketId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+    }
+}

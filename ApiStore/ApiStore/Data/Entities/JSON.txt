@@ -1,0 +1,85 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Store API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/basket/add-item": {
+      "post": {
+        "summary": "Add item to basket",
+        "description": "This endpoint adds a product to the user's basket.",
+        "operationId": "AddItemToBasket",
+        "tags": ["Basket"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddBasketItemRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Product added to basket successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasketItemResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or validation error."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddBasketItemRequest": {
+        "type": "object",
+        "properties": {
+          "basketId": {
+            "type": "integer",
+            "description": "ID of the basket"
+          },
+          "productId": {
+            "type": "integer",
+            "description": "ID of the product to add"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Quantity of the product to add"
+          }
+        },
+        "required": ["basketId", "productId", "quantity"]
+      },
+      "BasketItemResponse": {
+        "type": "object",
+        "properties": {
+          "basketItemId": {
+            "type": "integer",
+            "description": "ID of the newly created basket item"
+          },
+          "basketId": {
+            "type": "integer",
+            "description": "ID of the basket"
+          },
+          "productId": {
+            "type": "integer",
+            "description": "ID of the product added"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Quantity of the product added"
+          }
+        }
+      }
+    }
+  }
+}
