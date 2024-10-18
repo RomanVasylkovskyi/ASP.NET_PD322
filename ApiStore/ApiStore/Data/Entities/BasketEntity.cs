@@ -1,3 +1,4 @@
+using ApiStore.Data.Entities.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,9 +9,9 @@ namespace ApiStore.Data.Entities
         [Key]
         public int BasketId { get; set; }
 
-        [Required]
-        public string UserId { get; set; } = string.Empty; 
-
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public UserEntity? User { get; set; }
         public virtual ICollection<BasketItem>? BasketItems { get; set; }
     }
 
@@ -19,7 +20,7 @@ namespace ApiStore.Data.Entities
         [Key]
         public int BasketItemId { get; set; }
 
-        [Required, ForeignKey("Basket")]
+        [ForeignKey("Basket")]
         public int BasketId { get; set; }
         public virtual Basket Basket { get; set; }
 
